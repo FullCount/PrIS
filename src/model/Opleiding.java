@@ -208,7 +208,9 @@ public class Opleiding {
 			String klasCode = values[6];
 			
 			Klas klas = this.getKlas(klasCode);
-			Les les = new Les(startdatum, einddatum, lokaalCode);
+			Docent docent = new Docent(docentNaam);
+			
+			Les les = new Les(startdatum, einddatum, lokaalCode, docent);
 			
 			Vak vak = this.blok_C.zoekVak(vakCode);
 			if (vak == null) {
@@ -218,7 +220,7 @@ public class Opleiding {
 			vak.voegLesToe(les);
 			this.blok_C.voegVakToe(vak);
 			
-			Docent docent = new Docent(docentNaam);
+			
 			docent.setWachtwoord("geheim");
 			docent.voegVakToe(vak);
 			deDocenten.add(docent);

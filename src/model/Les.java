@@ -3,18 +3,18 @@ package model;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
-import javax.json.JsonValue;
-
 public class Les {
 	private LocalDateTime beginTijd;
 	private LocalDateTime eindTijd;
 	private String lokaal;
 	private ArrayList<Student> aanwezigeStudenten = new ArrayList<Student>();
+	private Docent docent;
 	
-	public Les(LocalDateTime bTijd, LocalDateTime eTijd, String lK)	{
+	public Les(LocalDateTime bTijd, LocalDateTime eTijd, String lK, Docent d1)	{
 		beginTijd = bTijd;
 		eindTijd = eTijd;
 		lokaal = lK;
+		docent = d1;	
 	}
 	
 	public boolean equals(Object obj)	{
@@ -31,6 +31,10 @@ public class Les {
 		return isGelijk;
 	}
 	
+	public String getDocentNaam()	{
+		return docent.getVolledigeNaam();
+	}
+	
 	public ArrayList getAanwezigeStudenten()	{
 		return aanwezigeStudenten;
 	}
@@ -41,6 +45,14 @@ public class Les {
 	
 	public void setBeginTijd(LocalDateTime bT)	{
 		beginTijd = bT;
+	}
+	
+	public String getLokaalCode()	{
+		return lokaal;
+	}
+	
+	public void setLokaalCode(String cd)	{
+		lokaal = cd;
 	}
 	
 	public LocalDateTime getEindTijd()	{

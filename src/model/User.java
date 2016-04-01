@@ -2,7 +2,7 @@ package model;
 
 public abstract class User {
 	protected String voornaam;
-	protected String tussenvoegsel;
+	protected String tussenvoegsel = " ";
 	protected String achternaam;
 	protected String gebruikersnaam = voornaam + " " ;
 	private String wachtwoord;

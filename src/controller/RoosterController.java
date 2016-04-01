@@ -1,11 +1,13 @@
 package controller;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Date;
 
 import javax.json.Json;
 import javax.json.JsonArrayBuilder;
 
-import model.Docent;
 import model.Klas;
 import model.Les;
 import model.Opleiding;
@@ -17,6 +19,7 @@ public class RoosterController extends Controller {
 	public RoosterController(Opleiding opleiding) {
 		super(opleiding);
 	}
+	
 	
 	public JsonArrayBuilder rooster(User user)	{
 		Student student = (Student) user;
@@ -46,8 +49,20 @@ public class RoosterController extends Controller {
 		try	{
 			JsonArrayBuilder jab = Json.createArrayBuilder();
 			
+			ArrayList<Object> lessen = null;
+			String klascode;
+			String vakcode;
+			String begintijd;
+			String eindtijd;
+			
 			for (Vak v : vakken) {
-				for(Les l : v.getLessen())	{
+				Collections.sort(v.getLessen(), new Comparator<Les>() {
+					@Override
+					public int compare(Les l1, Les l2) {
+						return l1.getBeginTijd().compareTo(l2.getBeginTijd());
+					}
+				});
+				for(Les l : v.getLessen())	{					
 					jab.add(
 							Json.createObjectBuilder()							// daarin voor elk vak een JSON-object...
 								.add("klascode", klas.getKlasCode())
@@ -55,9 +70,13 @@ public class RoosterController extends Controller {
 //								.add("vaknaam", v.getVakNaam())
 								.add("begintijd", l.getBeginTijd().toString())
 								.add("eindtijd", l.getEindTijd().toString())
+								.add("docent", l.getDocentNaam())
+								.add("lokaal", l.getLokaalCode())
 						);
 				}
 			}
+			
+			
 			
 			return jab;
 		}	catch(Exception ex)	{
